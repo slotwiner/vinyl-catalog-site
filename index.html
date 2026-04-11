@@ -344,8 +344,7 @@ let catalog = [];
 let activeGenre = null;
 
 async function load() {
-  const resp = await fetch('/api/catalog');
-  catalog = await resp.json();
+  catalog = EMBEDDED_CATALOG;
   buildGenreFilters();
   buildLocationFilter();
   render();
