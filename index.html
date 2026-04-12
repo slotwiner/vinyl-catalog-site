@@ -227,6 +227,10 @@
     <option value="genre">Sort: Genre</option>
     <option value="condition">Sort: Condition</option>
     <option value="last-played">Sort: Last Played</option>
+    <option value="label">Sort: Label</option>
+  </select>
+  <select class="sort-select" id="label-filter">
+    <option value="">All Labels</option>
   </select>
   <select class="sort-select" id="location-filter">
     <option value="">All Locations</option>
@@ -340,9 +344,11 @@ let catalog = [];
 let activeGenre = null;
 
 async function load() {
-  catalog = EMBEDDED_CATALOG;
+  const resp = await fetch('/api/catalog');
+  catalog = await resp.json();
   buildGenreFilters();
   buildLocationFilter();
+  buildLabelFilter();
   render();
 }
 
@@ -352,6 +358,18 @@ function buildLocationFilter() {
   const sel = document.getElementById('location-filter');
   const sorted = [...locs].sort();
   sel.innerHTML = '<option value="">All Locations</option>' +
+    sorted.map(l => `<option value="${l}">${l}</option>`).join('');
+}
+
+function buildLabelFilter() {
+  const labels = new Set();
+  catalog.forEach(r => {
+    const primary = (r.label || '').split(',')[0].trim();
+    if (primary) labels.add(primary);
+  });
+  const sel = document.getElementById('label-filter');
+  const sorted = [...labels].sort();
+  sel.innerHTML = '<option value="">All Labels</option>' +
     sorted.map(l => `<option value="${l}">${l}</option>`).join('');
 }
 
@@ -396,9 +414,11 @@ function getFiltered() {
   const q = document.getElementById('search').value.toLowerCase();
   const sortBy = document.getElementById('sort').value;
   const locFilter = document.getElementById('location-filter').value;
+  const labelFilter = document.getElementById('label-filter').value;
   let items = catalog.filter(r => {
     if (activeGenre && !(r.genre || '').includes(activeGenre)) return false;
     if (locFilter && (r.location || '') !== locFilter) return false;
+    if (labelFilter && (r.label || '').split(',')[0].trim() !== labelFilter) return false;
     if (!q) return true;
     return [r.artist, r.album, r.label, r.year, r.genre, r.pressing, r.catalog_number, r.location, r.tracklist, r.notes]
       .some(f => (f || '').toLowerCase().includes(q));
@@ -412,6 +432,7 @@ function getFiltered() {
       case 'genre': return (a.genre||'').localeCompare(b.genre||'');
       case 'condition': return (condOrder[a.condition]||8) - (condOrder[b.condition]||8);
       case 'last-played': return (b.last_played||'').localeCompare(a.last_played||'');
+      case 'label': return ((a.label||'').split(',')[0].trim()).localeCompare((b.label||'').split(',')[0].trim());
       case 'value-desc': {
         const va = parseFloat((a.estimated_value||'').replace('$',''))||0;
         const vb = parseFloat((b.estimated_value||'').replace('$',''))||0;
@@ -658,6 +679,7 @@ async function markPlaying(el) {
 document.getElementById('search').addEventListener('input', render);
 document.getElementById('sort').addEventListener('change', render);
 document.getElementById('location-filter').addEventListener('change', render);
+document.getElementById('label-filter').addEventListener('change', render);
 load();
 </script>
 </body>
