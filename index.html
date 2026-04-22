@@ -557,9 +557,6 @@ async function getRecommendations() {
   btn.textContent = 'Find Records';
 }
 
-document.getElementById('rec-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') getRecommendations();
-});
 
 async function markPlaying(el) { return;
   const items = getFiltered();
@@ -574,7 +571,7 @@ async function markPlaying(el) { return;
     record.last_played = data.date;
     render();
     const toast = document.getElementById('toast');
-    toast.textContent = 'Now playing: ' + record.artist + ' — ' + record.album;
+    toast.textContent = 'Now playing: ' + record.artist + ' \u2014 ' + record.album;
     toast.classList.add('show');
     setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Condition saved'; }, 2000);
   }
