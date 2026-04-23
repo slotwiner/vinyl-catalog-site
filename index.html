@@ -300,9 +300,11 @@ function renderRec(recs){
   }).join('');
 }
 async function _fetchRec(prompt){
-  if(!RECOMMEND_URL)throw new Error('Recommendation service not configured. See README to deploy the Cloudflare Worker.');
+  if(!RECOMMEND_URL)throw new Error('Recommendation service not configured.');
   const resp=await fetch(RECOMMEND_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,catalog:buildCatalog()})});
-  return resp.json();
+  const data=await resp.json();
+  if(!resp.ok||data.error)throw new Error(data.error||'Worker error '+resp.status);
+  return data;
 }
 async function getRecommendations(){
   const prompt=document.getElementById('rec-input').value.trim();
