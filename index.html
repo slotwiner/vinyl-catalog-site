@@ -45,6 +45,19 @@ header h1 { font-size: 1.4rem; font-weight: 600; color: #fff; flex-shrink: 0; }
 .track-pos { color: #666; width: 28px; flex-shrink: 0; }
 .track-title { flex: 1; }
 .track-dur { color: #666; }
+.badge{display:inline-block;padding:1px 6px;border-radius:4px;font-size:0.68rem;font-weight:600;text-transform:uppercase;}
+.badge-needs_review{background:#4a3a00;color:#ffb74d;}
+.badge-verified{background:#1a3a5c;color:#64b5f6;}
+.badge-locked{background:#4a1a1a;color:#ef5350;}
+@media(max-width:600px){
+  header{flex-direction:column;align-items:stretch;padding:12px;}
+  #search-bar{flex-direction:column;}
+  #grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:10px 12px;}
+  #modal{padding:16px;}
+  #modal .detail-grid{grid-template-columns:1fr;}
+  #modal-header{flex-direction:column;align-items:center;}
+  #modal-cover,#modal-cover-placeholder{width:160px;height:160px;}
+}
 </style>
 </head>
 <body>
@@ -81,12 +94,13 @@ header h1 { font-size: 1.4rem; font-weight: 600; color: #fff; flex-shrink: 0; }
 <script>
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function imgSrc(r){return r.cover_image_url||r.image_file||null;}
+function toggleLabel(btn){var uid=btn.getAttribute('data-target');var e=document.getElementById(uid);e.style.display=e.style.display==='none'?'inline':'none';}
 function labelHtml(label){
   if(!label)return null;
   const parts=label.split(',').map(s=>s.trim()).filter(Boolean);
   if(parts.length<=1)return esc(parts[0]||'');
   const uid='lbl'+Math.random().toString(36).slice(2);
-  return esc(parts[0])+' <button onclick="var e=document.getElementById(''+uid+'');e.style.display=e.style.display==='none'?'inline':'none'" style="background:none;border:none;color:#4a90d9;cursor:pointer;font-size:0.75rem;padding:0">+'+( parts.length-1)+' more</button><span id="'+uid+'" style="display:none"> · '+parts.slice(1).map(esc).join(', ')+'</span>';
+  return esc(parts[0])+' <button onclick="toggleLabel(this)" data-target="'+uid+'" style="background:none;border:none;color:#4a90d9;cursor:pointer;font-size:0.75rem;padding:0">+'+(parts.length-1)+' more</button><span id="'+uid+'" style="display:none"> · '+parts.slice(1).map(esc).join(', ')+'</span>';
 }
 function render(){
   const q=(document.getElementById('q').value||'').toLowerCase();
