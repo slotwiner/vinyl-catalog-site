@@ -286,8 +286,7 @@ function buildCatalog(){
     const p=[r.year,r.genre,r.style,r.location].filter(Boolean);
     if(p.length)s+=' ['+p.join(', ')+']';
     return s;
-  }).join('
-');
+  }).join('\n');
 }
 function renderRec(recs){
   const container=document.getElementById('rec-results');
