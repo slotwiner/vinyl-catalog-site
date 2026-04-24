@@ -23,6 +23,7 @@ header h1 { font-size: 1.4rem; font-weight: 600; color: #fff; flex-shrink: 0; }
 .card-artist { font-size: 0.78rem; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-album { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
 .card-meta { font-size: 0.72rem; color: #777; margin-top: 4px; }
+.card-price { font-size: 0.72rem; color: #81c784; margin-top: 4px; }
 .card-tracks { font-size: 0.7rem; color: #4a90d9; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
 #modal-overlay.open { display: flex; }
@@ -228,7 +229,9 @@ function render(){
     const img=src?`<img src="${esc(src)}" loading="lazy" alt="${esc(r.album||'')}">`:'<div class="no-img">&#9899;</div>';
     const mt=q?(r.tracklist||[]).filter(t=>(t.title||'').toLowerCase().includes(q)):[];
     const tracksHtml=mt.length?`<div class="card-tracks">Track: ${mt.map(t=>esc(t.title)).join(', ')}</div>`:'';
-    return `<div class="card" onclick="openModal(${r.id})">${img}<div class="card-body"><div class="card-artist">${esc(r.artist)}</div><div class="card-album">${esc(r.album)}</div><div class="card-meta">${esc(r.year||'')}${r.label?' · '+esc(r.label.split(',')[0].trim()):''}</div>${tracksHtml}</div></div>`;
+    const displayPrice=r.purchase_price||r.price||'';
+    const priceHtml=displayPrice?`<div class="card-price">${esc(displayPrice)}</div>`:'';
+    return `<div class="card" onclick="openModal(${r.id})">${img}<div class="card-body"><div class="card-artist">${esc(r.artist)}</div><div class="card-album">${esc(r.album)}</div><div class="card-meta">${esc(r.year||'')}${r.label?' · '+esc(r.label.split(',')[0].trim()):''}</div>${priceHtml}${tracksHtml}</div></div>`;
   }).join('');
 }
 function openModal(id){
@@ -241,7 +244,7 @@ function openModal(id){
   const ph=document.getElementById('modal-cover-placeholder');
   if(src){cover.src=src;cover.style.display='block';ph.style.display='none';}
   else{cover.style.display='none';ph.style.display='flex';}
-  const fields=[['Location',r.location],['Year',r.year],['Label',labelHtml(r.label)],['Genre',r.genre],['Style',r.style],['Format',r.format],['Pressing',r.pressing],['Catalog#',r.catalog_number],['Condition',r.condition],['Price',r.price],['Status',r.status],['Discogs',r.discogs_url?`<a href="${esc(r.discogs_url)}" target="_blank" style="color:#4a90d9">View on Discogs</a>`:null]];
+  const fields=[['Location',r.location],['Year',r.year],['Label',labelHtml(r.label)],['Genre',r.genre],['Style',r.style],['Format',r.format],['Pressing',r.pressing],['Catalog#',r.catalog_number],['Condition',r.condition],['Paid',r.purchase_price],['Purchase Date',r.purchase_date],['Purchased From',r.purchase_source],['Discogs Price',r.price],['Status',r.status],['Discogs',r.discogs_url?`<a href="${esc(r.discogs_url)}" target="_blank" style="color:#4a90d9">View on Discogs</a>`:null]];
   document.getElementById('modal-details').innerHTML=fields.filter(([,v])=>v).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join('');
   const notesEl=document.getElementById('modal-notes');
   const NL=200;
