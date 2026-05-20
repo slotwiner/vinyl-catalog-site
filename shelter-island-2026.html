@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shelter Island Summer 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: #f7f7f5;
+      color: #1a1a1a;
+      padding: 32px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+
+    /* Section headers */
+    .week-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin: 28px 0 8px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    thead th {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+    thead th:first-child { border-radius: 6px 0 0 0; }
+    thead th:last-child  { border-radius: 0 6px 0 0; }
+
+    tbody tr:last-child td:first-child { border-radius: 0 0 0 6px; }
+    tbody tr:last-child td:last-child  { border-radius: 0 0 6px 0; }
+
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: middle;
+    }
+    .col-date { width: 110px; font-weight: 600; white-space: nowrap; color: #333; }
+    .col-person { width: calc((100% - 110px - 180px) / 4); }
+    .col-notes { width: 180px; font-size: 0.78rem; color: #555; }
+
+    /* Location chips */
+    .loc {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .si        { background: #d4edda; color: #1a5c2a; }
+    .nyc       { background: #dce8f8; color: #1a3a6b; }
+    .travel    { background: #fde8c8; color: #7a3b00; }
+    .london    { background: #ebe0f8; color: #4a1878; }
+    .cannes    { background: #fde0e8; color: #7a1030; }
+    .ca        { background: #fef9c3; color: #7a5b00; }
+    .philly    { background: #e0e8f8; color: #1a2870; }
+    .andover   { background: #e8f8e0; color: #2a5c1a; }
+    .tbd       { background: #f0f0f0; color: #888; }
+
+    /* Special rows */
+    tr.alert td { background: #fffbeb; }
+    tr.allsi td { background: #f0faf2; }
+    tr.guests td { background: #fef6ff; }
+
+    .flag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .flag-warn { background: #fbbf24; color: #78350f; }
+    .flag-bday { background: #f9a8d4; color: #831843; }
+    .flag-guests { background: #d8b4fe; color: #4c1d95; }
+
+    /* Action items */
+    .actions {
+      margin-top: 36px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .actions h2 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .action-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.85rem;
+    }
+    .action-item:last-child { border-bottom: none; }
+    .action-date {
+      min-width: 80px;
+      font-weight: 700;
+      color: #c0392b;
+      white-space: nowrap;
+    }
+    .action-text { color: #333; line-height: 1.5; }
+    .action-text strong { color: #1a1a1a; }
+
+    /* Notes */
+    .notes {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .notes h2 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .note-row {
+      font-size: 0.85rem;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .note-row:last-child { border-bottom: none; }
+
+    .tbd-banner {
+      background: #fffbeb;
+      border: 1px solid #fbbf24;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 0.83rem;
+      color: #78350f;
+      margin-top: 20px;
+    }
+    .tbd-banner strong { color: #92400e; }
+
+    @media (max-width: 700px) {
+      body { padding: 16px 12px; }
+      td, thead th { padding: 6px 8px; font-size: 0.75rem; }
+      .col-notes { display: none; }
+      .col-date { width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Shelter Island Summer 2026</h1>
+<p class="subtitle">Rental: May 22 – July 30 &nbsp;·&nbsp; Daniel, Shefali, Micah, Saanika</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#d4edda"></div> Shelter Island</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#dce8f8"></div> NYC</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#fde8c8"></div> Travel / Transit</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#ebe0f8"></div> London</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#fde0e8"></div> Cannes</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#fef9c3"></div> California</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#e0e8f8"></div> Philadelphia</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#f0f0f0"></div> TBD</div>
+</div>
+
+
+<!-- ── WEEK 1 ── -->
+<div class="week-header">Week 1 — May 22–28</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-date">Fri May 22</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc andover">Andover</span></td>
+      <td>Rental opens</td>
+    </tr>
+    <tr>
+      <td class="col-date">May 23–27</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc andover">Andover</span></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="col-date">Thu May 28</td>
+      <td><span class="loc travel">Andover → SI</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc travel">Andover → SI</span></td>
+      <td>Daniel picks up Saanika from Andover</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── WEEK 2 ── -->
+<div class="week-header">Week 2 — May 29 – June 4</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-date">Fri May 29</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="col-date">Sat May 30</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> bar mitzvah</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td>Debbie with Micah in NYC</td>
+    </tr>
+    <tr>
+      <td class="col-date">Sun May 31</td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td><span class="loc tbd">TBD</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc tbd">TBD</span></td>
+      <td>Daniel → NYC for office week</td>
+    </tr>
+    <tr>
+      <td class="col-date">Mon Jun 1</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc tbd">TBD</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td></td>
+    </tr>
+    <tr class="alert">
+      <td class="col-date">Tue Jun 2 <span class="flag flag-bday">🎂</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td>Daniel's birthday</td>
+    </tr>
+    <tr>
+      <td class="col-date">Wed Jun 3</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc travel">NYC → CA ✈</span></td>
+      <td>Saanika departs for California</td>
+    </tr>
+    <tr>
+      <td class="col-date">Thu Jun 4</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc ca">California</span></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── WEEK 3 ── -->
+<div class="week-header">Week 3 — June 5–12</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-date">Fri Jun 5</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc ca">California</span></td>
+      <td>Shefali returns to SI</td>
+    </tr>
+    <tr>
+      <td class="col-date">Sat–Sun Jun 6–7</td>
+      <td><span class="loc tbd">TBD</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc ca">California</span></td>
+      <td>Micah at SI for weekend</td>
+    </tr>
+    <tr>
+      <td class="col-date">Mon–Tue Jun 8–9</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc ca">California</span></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="col-date">Wed Jun 10</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> last day</td>
+      <td><span class="loc travel">CA → NYC ✈</span></td>
+      <td>Micah's last day of school; Saanika returns from CA</td>
+    </tr>
+    <tr class="alert">
+      <td class="col-date">Thu Jun 11 <span class="flag flag-warn">⚠</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td>Hilton London cancel deadline</td>
+    </tr>
+    <tr>
+      <td class="col-date">Fri Jun 12</td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td>Daniel + Micah + Saanika drive up together</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── WEEK 4 ── -->
+<div class="week-header">Week 4 — June 13–20</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="allsi">
+      <td class="col-date">Sat–Sun Jun 13–14</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td>Full family at SI</td>
+    </tr>
+    <tr>
+      <td class="col-date">Mon Jun 15</td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td>Pre-flight staging</td>
+    </tr>
+    <tr>
+      <td class="col-date">Tue Jun 16</td>
+      <td><span class="loc travel">NYC → London ✈</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">NYC → London ✈</span></td>
+      <td><span class="loc travel">NYC → London ✈</span></td>
+      <td>DL 5996, JFK 8:15am → LHR</td>
+    </tr>
+    <tr>
+      <td class="col-date">Wed–Thu Jun 17–18</td>
+      <td><span class="loc london">London</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc london">London</span></td>
+      <td><span class="loc london">London</span></td>
+      <td>Hilton London Euston</td>
+    </tr>
+    <tr>
+      <td class="col-date">Fri Jun 19</td>
+      <td><span class="loc london">London</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc london">Sevenoaks</span></td>
+      <td><span class="loc london">London</span></td>
+      <td>Micah dropped at Sevenoaks 4:30–5pm</td>
+    </tr>
+    <tr>
+      <td class="col-date">Sat Jun 20</td>
+      <td><span class="loc london">London</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc london">Sevenoaks</span></td>
+      <td><span class="loc london">London</span></td>
+      <td>Pick up Micah after lunch; refreshments w/ staff</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── WEEK 5 ── -->
+<div class="week-header">Week 5 — June 21–28</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-date">Sun Jun 21</td>
+      <td><span class="loc travel">LHR → Nice ✈</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">LHR → JFK ✈</span></td>
+      <td><span class="loc travel">LHR → JFK ✈</span></td>
+      <td>Micah + Saanika: DL 2 (UM), arr. JFK 2:49pm — Debbie pickup. Daniel: BA 342 → Nice 1:10pm</td>
+    </tr>
+    <tr>
+      <td class="col-date">Mon–Wed Jun 22–24</td>
+      <td><span class="loc cannes">Cannes</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> music camp</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td>Saanika stays with Micah in NYC</td>
+    </tr>
+    <tr>
+      <td class="col-date">Thu Jun 25</td>
+      <td><span class="loc travel">Nice → JFK ✈</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span> music camp</td>
+      <td><span class="loc nyc">NYC</span></td>
+      <td>Daniel: DL 8668, arr. JFK 3:00pm</td>
+    </tr>
+    <tr>
+      <td class="col-date">Fri Jun 26</td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
+      <td>All drive up together — morning</td>
+    </tr>
+    <tr class="allsi">
+      <td class="col-date">Sat–Sun Jun 27–28</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td>Full family at SI</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── JULY ── -->
+<div class="week-header">July 1–9 — Full Family at Shelter Island</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="allsi">
+      <td class="col-date">Jul 1–2</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td></td>
+    </tr>
+    <tr class="guests">
+      <td class="col-date">Jul 3–5 <span class="flag flag-guests">guests</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td>Michael &amp; Nichole visiting — July 4th weekend</td>
+    </tr>
+    <tr class="allsi">
+      <td class="col-date">Jul 6–9</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="week-header">Week of July 10</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-date">Fri Jul 10</td>
+      <td><span class="loc travel">SI → Philly</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">SI → Philly</span></td>
+      <td>Saanika ACT retake</td>
+    </tr>
+    <tr>
+      <td class="col-date">Sat Jul 11</td>
+      <td><span class="loc travel">Philly → SI</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">Philly → SI</span></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="week-header">July 12–30 — Full Family at Shelter Island through end of rental</div>
+<table>
+  <thead>
+    <tr>
+      <th class="col-date">Date</th>
+      <th class="col-person">Daniel</th>
+      <th class="col-person">Shefali</th>
+      <th class="col-person">Micah</th>
+      <th class="col-person">Saanika</th>
+      <th class="col-notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="allsi">
+      <td class="col-date">Jul 12–30</td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td>Rental ends Jul 30</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ── NOTES ── -->
+<div class="notes">
+  <h2>Notes</h2>
+  <div class="note-row"><strong>Shefali at SI:</strong> Only time away is ~Jun 1–4 in NYC. At SI solo Jun 16–25 while Daniel and kids are in London/NYC. Otherwise present for the full rental.</div>
+  <div class="note-row"><strong>July 4th guests:</strong> Michael &amp; Nichole, Jul 3–5.</div>
+  <div class="note-row"><strong>Jun 21 — unaccompanied minors:</strong> Micah + Saanika on DL 2 (LHR → JFK, arr. 2:49pm). Delta UM protocol must be arranged before Jun 16. Debbie picking up at JFK — confirmed.</div>
+  <div class="note-row"><strong>London hotel:</strong> Hilton London Euston, Conf. #3453017240, £1,969.53. Cancel by Jun 11 if needed.</div>
+  <div class="note-row"><strong>London flights:</strong> Outbound DL 5996 (Jun 16, JFK 8:15am). Kids home DL 2 (Jun 21, LHR 11:45am / JFK 2:49pm). Daniel: BA 342 LHR → Nice (Jun 21, 1:10pm). Daniel home: DL 8668 (Jun 25, arr. JFK 3:00pm).</div>
+</div>
+
+
+<!-- ── ACTIONS ── -->
+<div class="actions">
+  <h2>Action Items</h2>
+  <div class="action-item">
+    <div class="action-date">By Jun 11</div>
+    <div class="action-text"><strong>Hilton London Euston</strong> — cancel deadline (Conf. #3453017240, £1,969.53). No action needed if trip is on.</div>
+  </div>
+  <div class="action-item">
+    <div class="action-date">Before Jun 16</div>
+    <div class="action-text"><strong>Delta unaccompanied minor protocol</strong> — arrange for Micah + Saanika on DL 2, Jun 21 (LHR → JFK).</div>
+  </div>
+  <div class="action-item">
+    <div class="action-date">Before Jun 16</div>
+    <div class="action-text"><strong>Confirm Debbie</strong> for JFK pickup Jun 21 ~2:49pm. (Currently confirmed.)</div>
+  </div>
+  <div class="action-item">
+    <div class="action-date">Before Sep 21</div>
+    <div class="action-text"><strong>Manson Mews payment</strong> to Sara Jackson — London rental Sep 21–Oct 31 (40 nights × £300 = ~£12,000).<br>RBS · JACKSON SL · Sort: 16-00-84 · Acct: 10090768 · IBAN: GB72RBOS16008410090768</div>
+  </div>
+</div>
+
+<div class="tbd-banner">
+  <strong>One remaining TBD:</strong> Does Shefali go to NYC on May 31 (with Daniel) or arrive June 2? Either way she's back at SI by June 5.
+</div>
+
+</body>
+</html>
