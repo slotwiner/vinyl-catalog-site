@@ -11,7 +11,7 @@
       background: #f7f7f5;
       color: #1a1a1a;
       padding: 32px 24px;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     h1 {
@@ -83,9 +83,10 @@
       border-bottom: 1px solid #e8e8e8;
       vertical-align: middle;
     }
-    .col-date { width: 110px; font-weight: 600; white-space: nowrap; color: #333; }
-    .col-person { width: calc((100% - 110px - 180px) / 4); }
-    .col-notes { width: 180px; font-size: 0.78rem; color: #555; }
+    .col-date   { width: 110px; font-weight: 600; white-space: nowrap; color: #333; }
+    .col-person { width: calc((100% - 110px - 100px - 180px) / 4); }
+    .col-car    { width: 100px; }
+    .col-notes  { width: 180px; font-size: 0.78rem; color: #555; }
 
     /* Location chips */
     .loc {
@@ -197,6 +198,7 @@
       body { padding: 16px 12px; }
       td, thead th { padding: 6px 8px; font-size: 0.75rem; }
       .col-notes { display: none; }
+      .col-car { display: none; }
       .col-date { width: 80px; }
     }
   </style>
@@ -228,6 +230,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -236,16 +239,36 @@
       <td class="col-date">Fri May 22</td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
-      <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc andover">Andover</span></td>
-      <td>Rental opens</td>
+      <td><span class="loc si">SI</span></td>
+      <td>Rental opens; Micah joins</td>
     </tr>
     <tr>
-      <td class="col-date">May 23–27</td>
+      <td class="col-date">May 23–24</td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc andover">Andover</span></td>
+      <td><span class="loc si">SI</span></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="col-date">Mon May 25</td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td><span class="loc andover">Andover</span></td>
+      <td><span class="loc travel">SI → NYC</span></td>
+      <td>Memorial Day — Daniel + Micah back to NYC</td>
+    </tr>
+    <tr>
+      <td class="col-date">May 26–27</td>
+      <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc andover">Andover</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td></td>
     </tr>
     <tr>
@@ -254,6 +277,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc travel">Andover → SI</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
       <td>Daniel picks up Saanika from Andover</td>
     </tr>
   </tbody>
@@ -270,6 +294,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -280,6 +305,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td></td>
     </tr>
     <tr>
@@ -288,6 +314,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> bar mitzvah</td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Debbie with Micah in NYC</td>
     </tr>
     <tr>
@@ -296,6 +323,7 @@
       <td><span class="loc tbd">TBD</span></td>
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc tbd">TBD</span></td>
+      <td><span class="loc travel">SI → NYC</span></td>
       <td>Daniel → NYC for office week</td>
     </tr>
     <tr>
@@ -304,6 +332,7 @@
       <td><span class="loc tbd">TBD</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td></td>
     </tr>
     <tr class="alert">
@@ -311,6 +340,7 @@
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
+      <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span></td>
       <td>Daniel's birthday</td>
     </tr>
@@ -320,6 +350,7 @@
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc travel">NYC → CA ✈</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td>Saanika departs for California</td>
     </tr>
     <tr>
@@ -328,6 +359,7 @@
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc ca">California</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td></td>
     </tr>
   </tbody>
@@ -344,6 +376,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -354,6 +387,7 @@
       <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc ca">California</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td>Shefali returns to SI</td>
     </tr>
     <tr>
@@ -362,6 +396,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc ca">California</span></td>
+      <td><span class="loc tbd">TBD</span></td>
       <td>Micah at SI for weekend</td>
     </tr>
     <tr>
@@ -370,6 +405,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> school</td>
       <td><span class="loc ca">California</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td></td>
     </tr>
     <tr>
@@ -378,6 +414,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> last day</td>
       <td><span class="loc travel">CA → NYC ✈</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td>Micah's last day of school; Saanika returns from CA</td>
     </tr>
     <tr class="alert">
@@ -386,12 +423,14 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span></td>
       <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc nyc">NYC</span></td>
       <td>Hilton London cancel deadline</td>
     </tr>
     <tr>
       <td class="col-date">Fri Jun 12</td>
       <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc travel">NYC → SI</span></td>
       <td>Daniel + Micah + Saanika drive up together</td>
@@ -410,6 +449,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -420,6 +460,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Full family at SI</td>
     </tr>
     <tr>
@@ -428,7 +469,8 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc travel">SI → NYC</span></td>
       <td><span class="loc travel">SI → NYC</span></td>
-      <td>Pre-flight staging</td>
+      <td><span class="loc si">SI</span></td>
+      <td>Daniel + Micah + Saanika: Jitney to NYC. Car stays at SI.</td>
     </tr>
     <tr>
       <td class="col-date">Tue Jun 16</td>
@@ -436,6 +478,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc travel">NYC → London ✈</span></td>
       <td><span class="loc travel">NYC → London ✈</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>DL 5996, JFK 8:15am → LHR</td>
     </tr>
     <tr>
@@ -444,6 +487,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc london">London</span></td>
       <td><span class="loc london">London</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Hilton London Euston</td>
     </tr>
     <tr>
@@ -452,6 +496,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc london">Sevenoaks</span></td>
       <td><span class="loc london">London</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Micah dropped at Sevenoaks 4:30–5pm</td>
     </tr>
     <tr>
@@ -460,6 +505,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc london">Sevenoaks</span></td>
       <td><span class="loc london">London</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Pick up Micah after lunch; refreshments w/ staff</td>
     </tr>
   </tbody>
@@ -476,6 +522,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -486,6 +533,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc travel">LHR → JFK ✈</span></td>
       <td><span class="loc travel">LHR → JFK ✈</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Micah + Saanika: DL 2 (UM), arr. JFK 2:49pm — Debbie pickup. Daniel: BA 342 → Nice 1:10pm</td>
     </tr>
     <tr>
@@ -494,6 +542,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> music camp</td>
       <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Saanika stays with Micah in NYC</td>
     </tr>
     <tr>
@@ -502,6 +551,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc nyc">NYC</span> music camp</td>
       <td><span class="loc nyc">NYC</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Daniel: DL 8668, arr. JFK 3:00pm</td>
     </tr>
     <tr>
@@ -510,7 +560,8 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc travel">NYC → SI</span></td>
       <td><span class="loc travel">NYC → SI</span></td>
-      <td>All drive up together — morning</td>
+      <td><span class="loc si">SI</span></td>
+      <td>Daniel + Micah + Saanika: Jitney to SI — morning</td>
     </tr>
     <tr class="allsi">
       <td class="col-date">Sat–Sun Jun 27–28</td>
@@ -518,6 +569,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Full family at SI</td>
     </tr>
   </tbody>
@@ -534,6 +586,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -544,6 +597,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td></td>
     </tr>
     <tr class="guests">
@@ -552,6 +606,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Michael &amp; Nichole visiting — July 4th weekend</td>
     </tr>
     <tr class="allsi">
@@ -560,6 +615,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td></td>
     </tr>
   </tbody>
@@ -574,6 +630,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -584,6 +641,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc travel">SI → Philly</span></td>
+      <td><span class="loc travel">SI → Philly</span></td>
       <td>Saanika ACT retake</td>
     </tr>
     <tr>
@@ -591,6 +649,7 @@
       <td><span class="loc travel">Philly → SI</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc travel">Philly → SI</span></td>
       <td><span class="loc travel">Philly → SI</span></td>
       <td></td>
     </tr>
@@ -606,6 +665,7 @@
       <th class="col-person">Shefali</th>
       <th class="col-person">Micah</th>
       <th class="col-person">Saanika</th>
+      <th class="col-car">Car</th>
       <th class="col-notes">Notes</th>
     </tr>
   </thead>
@@ -616,6 +676,7 @@
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
       <td><span class="loc si">Shelter Island</span></td>
+      <td><span class="loc si">SI</span></td>
       <td>Rental ends Jul 30</td>
     </tr>
   </tbody>
